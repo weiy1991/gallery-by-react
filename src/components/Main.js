@@ -9,15 +9,7 @@ let yeomanImage = require('../images/2.jpg');
 
 //get the json file
 const jsonImg = require('json-loader!../data/imgData.json');
-
-//print(imgDatas);
-
-//var testImage = require('../images/'+json[6].fileName);
-
-//alert(imgDatas);
-
-//let x= json[0].fileName;
-
+//get the single imgURL
 function genImgURL(imgDataArr){
   for (var i=0,j=imgDataArr.length;i<j;i++){
     var singleImgData = imgDataArr[i];
@@ -26,16 +18,40 @@ function genImgURL(imgDataArr){
   }
   return imgDataArr;
 }
-
 var imgDatas = genImgURL(jsonImg);
+
+class ImgFigure extends React.Component {
+  render() {
+    return(
+      <figure className="img-figure">
+        <img src={this.props.data.imgURL}
+            alt={this.props.data.title}
+        />
+        <figcaption>
+          <h2 className="img-title">{this.props.data.title}</h2>
+        </figcaption>
+      </figure>
+    );
+  }
+}
 
 class AppComponent extends React.Component {
   render() {
+    var controllerUnits = [],
+        imgFigures = [];
+
+    imgDatas.forEach(function(value){
+      imgFigures.push(<ImgFigure data={value}/>);
+    });
+
+
     return (
       <section className="stage">
         <section className="img-sec">
+          {imgFigures}
         </section>
         <nav className="controller-nav">
+          {controllerUnits}
         </nav>
       </section>
       // <div className="index">
